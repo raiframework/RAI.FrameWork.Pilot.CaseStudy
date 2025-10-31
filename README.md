@@ -76,6 +76,152 @@ Respects data privacy, inclusivity, and accountability principles.
 
 Encourages digital literacy and transparent learning analytics as part of sustainable transformation.
 
+Pilot Case Study Step by Step :
+🎓 Project 1: RAI RU ETL – Unified Table Model
+
+Welcome everyone to the first project in this course!
+This introductory project will help you understand the end-to-end process of organizing, cleaning, and preparing a unified dataset for loading into a relational database.
+We’ll use real data related to the Reflective Agile Intelligence (RAI) RU Project, focusing on integrating registration, attendance, photos, and membership records into one structured table.
+
+🧱 Step 1. Organize Your ETL Workspace
+
+Before doing any cleaning or transformation, create four folders to follow the RAI ETL model:
+
+Folder	Purpose	Notes
+1.Original.File	Store raw files exactly as received.	Never modify these.
+2.Prepared.File	Perform cleaning, merging, and validation.	Work only on copies.
+3.Load.File	Final version ready for database ingestion.	Must be verified and clean.
+4.Anomalies.Data	Store rejected or problematic rows.	Document the issue and cause.
+
+💡 Tip: Always protect the 1.Original.File copy. If something breaks, you can easily restart.
+
+🗃️ Step 2. Understand Your Unified Dataset
+
+The dataset you are working with is a single merged table that consolidates multiple data sources.
+
+🧩 Table: RAI_RU_Integrated.csv
+
+Each row now represents one participant’s full event journey—from registration to attendance to certification status.
+
+Category	Columns	Description
+Registration Data	registration_id, full_name, email, event_code, registration_timestamp, source_file	Registration records from event forms
+Attendance Data	attendance_id, display_name, join_time, leave_time, platform, Section, Member, Member Type, WebexAttendance.Report	Attendance logs across Webex, Zoom, Teams, or Google Meet
+Photo Metadata	photo_id, file_path, attendee_label, consent_flag, photo_timestamp, load_date, source_file	Session photo and consent records
+Membership Data	member_id, member_name, member_type, certification_status, member_email, source_file	Member profiles and certification progress
+🧹 Step 3. Clean the Data (in 2.Prepared.File)
+
+Now, open the unified dataset in Excel or Power BI (or Python/Pandas if you prefer scripting).
+
+🔍 3.1 Verify Column Names and Formats
+
+Check that headers match exactly the expected schema above.
+
+Confirm all date/time fields are recognized as datetime types.
+
+Standardize platform entries → only Webex, Zoom, Teams, Google Meet.
+
+Normalize case:
+
+email, member_email → lowercase
+
+full_name, display_name, member_name → proper title case
+
+🧩 3.2 Key Consistency
+
+Each registration_id, attendance_id, member_id, photo_id must be unique.
+
+Check for duplicated rows or missing event codes (event_code).
+
+Where event_code mismatches across subcomponents, flag them to 4.Anomalies.Data/anomalies_event_mismatch.csv.
+
+🧮 3.3 Derived Columns
+
+Attendance Duration:
+attendance_minutes = DATEDIFF(minute, join_time, leave_time)
+
+Consent Category:
+If consent_flag = 0, mask the file_path value (replace with “null”).
+
+🔒 3.4 Privacy and Data Ethics
+
+Do not remove non-consented rows; simply mask sensitive fields.
+
+Ensure photo paths are not publicly exposed unless consent is confirmed.
+
+Maintain compliance with RAI Governance Code G1.4.
+
+🧰 Step 4. Create the Load Table (in 3.Load.File)
+
+Once cleaned, save the file as:
+
+RAI_RU_Load_YYYYMMDD.csv
+
+and prepare to load into SQL Server, Power BI, or your analytics tool.
+
+Recommended SQL Table Schema
+CREATE TABLE dbo.RAI_RU_Participants (
+  registration_id INT,
+  full_name NVARCHAR(200),
+  email NVARCHAR(200),
+  event_code VARCHAR(50),
+  registration_timestamp DATETIME2,
+  attendance_id INT,
+  display_name NVARCHAR(200),
+  join_time DATETIME2,
+  leave_time DATETIME2,
+  platform VARCHAR(50),
+  section NVARCHAR(100),
+  member NVARCHAR(100),
+  member_type VARCHAR(100),
+  webex_attendance_report NVARCHAR(100),
+  photo_id INT,
+  file_path NVARCHAR(400),
+  attendee_label NVARCHAR(100),
+  consent_flag BIT,
+  photo_timestamp DATETIME2,
+  load_date DATETIME2,
+  member_id INT,
+  member_name NVARCHAR(200),
+  certification_status VARCHAR(100),
+  member_email NVARCHAR(200),
+  attendance_minutes INT
+);
+
+🚨 Step 5. Handle Anomalies (in 4.Anomalies.Data)
+
+When validation fails, separate those records for review:
+
+File Name	Purpose
+anomalies_event_mismatch.csv	Event codes don’t align across sources
+anomalies_duplicates.csv	Duplicate participant or registration IDs
+anomalies_time_issues.csv	Negative or unrealistic attendance durations
+anomalies_consent.csv	Missing or revoked consent details
+🔁 Step 6. Save and Reflect
+
+Once all stages are complete:
+
+Keep the original file safe.
+
+Keep a clean prepared version as your ETL input.
+
+Keep load-ready and anomaly files properly dated.
+
+Document your data cleaning observations in a short reflective log:
+
+What patterns did you find?
+
+How did you resolve inconsistencies?
+
+What could be automated in the next cycle?
+
+🌱 Outcome
+
+By the end of this project, you’ll have:
+
+✅ A single, unified table ready for SQL or Power BI.
+✅ A transparent ETL structure aligned with RAI Medallion Logic (Bronze → Silver → Gold → Anomalies).
+✅ Documented data governance, consent, and reflection records.
+
 📬 Authors
 
 Narges Aminimoghaddam & Jafar Abolfathi
