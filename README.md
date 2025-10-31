@@ -193,15 +193,19 @@ CREATE TABLE dbo.RAI_RU_Participants (
   attendance_minutes INT
 );
 
+
 🚨 Step 5. Handle Anomalies (in 4.Anomalies.Data)
 
 When validation fails, separate those records for review:
 
-File Name	Purpose
-anomalies_event_mismatch.csv	Event codes don’t align across sources
-anomalies_duplicates.csv	Duplicate participant or registration IDs
-anomalies_time_issues.csv	Negative or unrealistic attendance durations
-anomalies_consent.csv	Missing or revoked consent details
+| File Name                      | Purpose                                      |
+| ------------------------------ | -------------------------------------------- |
+| `anomalies_event_mismatch.csv` | Event codes don’t align across sources       |
+| `anomalies_duplicates.csv`     | Duplicate participant or registration IDs    |
+| `anomalies_time_issues.csv`    | Negative or unrealistic attendance durations |
+| `anomalies_consent.csv`        | Missing or revoked consent details           |
+
+
 🔁 Step 6. Save and Reflect
 
 Once all stages are complete:
