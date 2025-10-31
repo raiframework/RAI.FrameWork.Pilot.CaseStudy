@@ -77,6 +77,7 @@ Respects data privacy, inclusivity, and accountability principles.
 Encourages digital literacy and transparent learning analytics as part of sustainable transformation.
 
 Pilot Case Study Step by Step :
+
 🎓 Project 1: RAI RU ETL – Unified Table Model
 
 Welcome everyone to the first project in this course!
@@ -87,11 +88,14 @@ We’ll use real data related to the Reflective Agile Intelligence (RAI) RU Proj
 
 Before doing any cleaning or transformation, create four folders to follow the RAI ETL model:
 
-Folder	Purpose	Notes
-1.Original.File	Store raw files exactly as received.	Never modify these.
-2.Prepared.File	Perform cleaning, merging, and validation.	Work only on copies.
-3.Load.File	Final version ready for database ingestion.	Must be verified and clean.
-4.Anomalies.Data	Store rejected or problematic rows.	Document the issue and cause.
+| Folder               | Purpose                                     | Notes                         |
+| -------------------- | ------------------------------------------- | ----------------------------- |
+| **1.Original.File**  | Store raw files exactly as received.        | Never modify these.           |
+| **2.Prepared.File**  | Perform cleaning, merging, and validation.  | Work only on copies.          |
+| **3.Load.File**      | Final version ready for database ingestion. | Must be verified and clean.   |
+| **4.Anomalies.Data** | Store rejected or problematic rows.         | Document the issue and cause. |
+
+
 
 💡 Tip: Always protect the 1.Original.File copy. If something breaks, you can easily restart.
 
@@ -103,11 +107,13 @@ The dataset you are working with is a single merged table that consolidates mult
 
 Each row now represents one participant’s full event journey—from registration to attendance to certification status.
 
-Category	Columns	Description
-Registration Data	registration_id, full_name, email, event_code, registration_timestamp, source_file	Registration records from event forms
-Attendance Data	attendance_id, display_name, join_time, leave_time, platform, Section, Member, Member Type, WebexAttendance.Report	Attendance logs across Webex, Zoom, Teams, or Google Meet
-Photo Metadata	photo_id, file_path, attendee_label, consent_flag, photo_timestamp, load_date, source_file	Session photo and consent records
-Membership Data	member_id, member_name, member_type, certification_status, member_email, source_file	Member profiles and certification progress
+| **Category**          | **Columns**                                                                                                                          | **Description**                                           |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| **Registration Data** | `registration_id`, `full_name`, `email`, `event_code`, `registration_timestamp`, `source_file`                                       | Registration records from event forms                     |
+| **Attendance Data**   | `attendance_id`, `display_name`, `join_time`, `leave_time`, `platform`, `Section`, `Member`, `Member Type`, `WebexAttendance.Report` | Attendance logs across Webex, Zoom, Teams, or Google Meet |
+| **Photo Metadata**    | `photo_id`, `file_path`, `attendee_label`, `consent_flag`, `photo_timestamp`, `load_date`, `source_file`                             | Session photo and consent records                         |
+| **Membership Data**   | `member_id`, `member_name`, `member_type`, `certification_status`, `member_email`, `source_file`                                     | Member profiles and certification progress                |
+
 🧹 Step 3. Clean the Data (in 2.Prepared.File)
 
 Now, open the unified dataset in Excel or Power BI (or Python/Pandas if you prefer scripting).
@@ -226,5 +232,4 @@ By the end of this project, you’ll have:
 
 Narges Aminimoghaddam & Jafar Abolfathi
 Creators of the Reflective Agile Intelligence (RAI) Framework
-🌐 https://raiframework.org
- (Website's Update Coming Soon)
+🌐 https://raiframework.org          (Website's Update Coming Soon)
